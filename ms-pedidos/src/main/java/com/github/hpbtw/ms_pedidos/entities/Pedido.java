@@ -32,7 +32,8 @@ public class Pedido {
     private BigDecimal valorTotal;
 
     @OneToMany(mappedBy = "pedido",
-        cascade = CascadeType.PERSIST, orphanRemoval = true)
+        cascade = CascadeType.PERSIST, orphanRemoval = true
+    ,fetch = FetchType.EAGER)
     private List<ItemDoPedido> itens = new ArrayList<>();
 
     public void calcularValorTotalDoPedido() {
