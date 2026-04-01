@@ -38,6 +38,18 @@ public class PedidoController {
                 .buildAndExpand(dto.getId())
                 .toUri();
         return ResponseEntity.created(uri).body(dto);
+    }
 
+    @PutMapping("/{id}")
+    public ResponseEntity<PedidoDTO> updatePedido(@PathVariable Long id,
+                                                  @Valid @RequestBody PedidoDTO dto) {
+        return ResponseEntity.ok((service.updatePedido(id, dto)));
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> deletePedido(@PathVariable Long id) {
+        service.deletePedidoById(id);
+
+        return ResponseEntity.noContent().build();
     }
 }

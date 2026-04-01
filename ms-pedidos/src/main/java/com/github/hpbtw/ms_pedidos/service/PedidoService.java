@@ -56,6 +56,11 @@ public class PedidoService {
             throw new ResourceNotFoundException("Pedido de ID: " + id + " não encontrado");
         }
     }
+    public void deletePedidoById(Long id) {
+        if(!repo.existsById(id)) throw new ResourceNotFoundException("Pedido de ID: " + id + " não encontrado.");
+
+        repo.deleteById(id);
+    }
 
     private void mapDtoToPedido(PedidoDTO dto, Pedido p) {
         p.setNome(dto.getNome());
