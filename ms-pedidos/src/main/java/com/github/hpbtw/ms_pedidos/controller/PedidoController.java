@@ -3,12 +3,13 @@ package com.github.hpbtw.ms_pedidos.controller;
 import com.github.hpbtw.ms_pedidos.dto.PedidoDTO;
 import com.github.hpbtw.ms_pedidos.entities.Pedido;
 import com.github.hpbtw.ms_pedidos.service.PedidoService;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
+import java.net.URI;
 import java.util.List;
 
 @RestController
@@ -20,5 +21,23 @@ public class PedidoController {
     @GetMapping
     public ResponseEntity<List<PedidoDTO>> getAllPedidos() {
         return ResponseEntity.ok(service.findAllPedidos());
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<PedidoDTO> getPedidoById(@PathVariable Long id) {
+        return ResponseEntity.ok(service.findPedidoById(id));
+    }
+
+    @PostMapping
+    public ResponseEntity<PedidoDTO> createPedido(@RequestBody @Valid PedidoDTO dto) {
+        dto = service.savePedido(dto);
+
+        URI uri = ServletUriComponentsBuilder
+                .fromCurrentRequestUri()
+                .path("/{id}")
+                .buildAndExpand(dto.getId())
+                .toUri();
+        return ResponseEntity.created(uri).body(dto);
+
     }
 }
