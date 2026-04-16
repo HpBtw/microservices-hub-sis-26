@@ -35,7 +35,7 @@ public class PagamentoServiceTest {
     private Pagamento pagamento;
 
     @BeforeEach
-    void setUp() {
+    void setup() {
         existingId = 1L;
         nonExistingId = Long.MAX_VALUE;
 
