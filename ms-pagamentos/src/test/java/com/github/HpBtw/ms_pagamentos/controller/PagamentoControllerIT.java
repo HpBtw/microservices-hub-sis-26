@@ -130,7 +130,7 @@ public class PagamentoControllerIT {
     }
 
     @Test
-    void updatePagamentoShouldReturn422WhenIdExists() throws Exception {
+    void updatePagamentoShouldReturn422WhenInvalid() throws Exception {
         pagamento = Factory.createPagamento();
         pagamento.setNome(null);
         pagamento.setValor(BigDecimal.valueOf(-32.05));
@@ -145,7 +145,34 @@ public class PagamentoControllerIT {
                 .andDo(print())
                 .andExpect(status().isUnprocessableEntity())
                 .andExpect(jsonPath("$.error").value("Dados inválidos"))
-                .andExpect(jsonPath("$.erros").isArray());
+                .andExpect(jsonPath("$.errors").isArray());
+    }
 
+    @Test
+    void updatePagamentoShouldReturn404WhenIdDoesNotExist() throws Exception {
+        pagamento = Factory.createPagamento();
+        PagamentoDTO requestDto = new PagamentoDTO(pagamento);
+        String jsonReqBody = objectMapper.writeValueAsString(requestDto);
+
+        mockMvc.perform(put("/pagamentos/{id}", nonExistingId)
+                    .contentType(MediaType.APPLICATION_JSON)
+                    .accept(MediaType.APPLICATION_JSON)
+                    .content(jsonReqBody))
+                .andDo(print())
+                .andExpect(status().isNotFound());
+    }
+
+    @Test
+    void deletePagamentoShouldReturn204WhenIdExists() throws Exception {
+        mockMvc.perform(delete("/pagamentos/{id}", existingId))
+                .andDo(print())
+                .andExpect(status().isNoContent());
+    }
+
+    @Test
+    void deletePagamentoShouldReturn404WhenIdDoesNotExist() throws Exception {
+        mockMvc.perform(delete("/pagamentos/{id}", nonExistingId))
+                .andDo(print())
+                .andExpect(status().isNotFound());
     }
 }
