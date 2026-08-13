@@ -5,6 +5,7 @@ import com.github.hpbtw.ms_pedidos.entities.Pedido;
 import com.github.hpbtw.ms_pedidos.service.PedidoService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
@@ -17,6 +18,11 @@ import java.util.List;
 public class PedidoController {
     @Autowired
     private PedidoService service;
+
+    @GetMapping("/port")
+    public String port(@Value("${local.server.port}") String porta) {
+        return "Instância respondeu na porta " + porta;
+    }
 
     @GetMapping
     public ResponseEntity<List<PedidoDTO>> getAllPedidos() {
