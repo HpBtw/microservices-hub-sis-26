@@ -3,6 +3,7 @@ package com.github.HpBtw.ms_pagamentos.controller;
 import com.github.HpBtw.ms_pagamentos.dto.PagamentoDTO;
 import com.github.HpBtw.ms_pagamentos.service.PagamentoService;
 import jakarta.validation.Valid;
+import jakarta.validation.constraints.NotNull;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -40,6 +41,12 @@ public class PagamentoController {
                 .toUri();
 
         return ResponseEntity.created(uri).body(dto);
+    }
+
+    @PatchMapping("/{id}/confirmar")
+    public ResponseEntity<PagamentoDTO> confirmarPagamentoDoPedido(@PathVariable
+                                                                   @NotNull Long id) {
+        return ResponseEntity.ok(service.confirmarPagamento(id));
     }
 
     @PutMapping("/{id}")

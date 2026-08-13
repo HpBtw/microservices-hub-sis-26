@@ -1,6 +1,7 @@
 package com.github.hpbtw.ms_pedidos.exceptions.handler;
 
 import com.github.hpbtw.ms_pedidos.exceptions.DatabaseException;
+import com.github.hpbtw.ms_pedidos.exceptions.PedidoPagoException;
 import com.github.hpbtw.ms_pedidos.exceptions.ResourceNotFoundException;
 import com.github.hpbtw.ms_pedidos.exceptions.dto.CustomErrorDTO;
 import com.github.hpbtw.ms_pedidos.exceptions.dto.ValidationErrorDTO;
@@ -18,6 +19,15 @@ import java.time.Instant;
 
 @RestControllerAdvice
 public class GlobalExceptionHandler {
+
+    @ExceptionHandler(PedidoPagoException.class)
+    public ResponseEntity<CustomErrorDTO> handlePedidoPago(PedidoPagoException e,
+                                                           HttpServletRequest req) {
+        HttpStatus status = HttpStatus.CONFLICT;
+        CustomErrorDTO error = new CustomErrorDTO(Instant.now(), status.value(), e.getMessage(), req.getRequestURI());
+
+        return ResponseEntity.status(status).body(error);
+    }
 
     @ExceptionHandler(ResourceNotFoundException.class)
     public ResponseEntity<CustomErrorDTO> handleResourceNotFound(ResourceNotFoundException e,

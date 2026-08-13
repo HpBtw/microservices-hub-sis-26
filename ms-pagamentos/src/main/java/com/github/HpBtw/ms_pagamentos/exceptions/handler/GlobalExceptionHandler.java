@@ -1,6 +1,7 @@
 package com.github.HpBtw.ms_pagamentos.exceptions.handler;
 
 import com.github.HpBtw.ms_pagamentos.exceptions.DatabaseException;
+import com.github.HpBtw.ms_pagamentos.exceptions.PagamentoAprovadoException;
 import com.github.HpBtw.ms_pagamentos.exceptions.ResourceNotFoundException;
 import com.github.HpBtw.ms_pagamentos.exceptions.dto.CustomErrorDTO;
 import com.github.HpBtw.ms_pagamentos.exceptions.dto.ValidationErrorDTO;
@@ -18,6 +19,13 @@ import java.time.Instant;
 
 @RestControllerAdvice
 public class GlobalExceptionHandler {
+
+    public ResponseEntity<CustomErrorDTO> handlePagamentoAprovado(PagamentoAprovadoException e,
+                                                                  HttpServletRequest req) {
+        HttpStatus status = HttpStatus.CONFLICT;
+        CustomErrorDTO error = new CustomErrorDTO(Instant.now(), status.value(), e.getMessage(), req.getRequestURI());
+        return ResponseEntity.status(status).body(error);
+    }
 
     @ExceptionHandler(ResourceNotFoundException.class)
     public ResponseEntity<CustomErrorDTO> handleResourceNotFound(ResourceNotFoundException e,

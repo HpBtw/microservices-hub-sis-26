@@ -46,6 +46,9 @@ public class PedidoController {
         return ResponseEntity.created(uri).body(dto);
     }
 
+    @PutMapping("/{pedidoId}/pagamento/confirmado")
+    public void confirmarPagamento(@PathVariable Long id) { service.confirmarPagamento(id);}
+
     @PutMapping("/{id}")
     public ResponseEntity<PedidoDTO> updatePedido(@PathVariable Long id,
                                                   @Valid @RequestBody PedidoDTO dto) {
