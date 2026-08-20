@@ -60,7 +60,6 @@ public class PedidoService {
     public PedidoDTO updatePedido(Long id, PedidoDTO dto) {
         try {
             Pedido p = repo.getReferenceById(id);
-
             if (p.getStatus().equals(Status.PAGO)) {
                 throw new PedidoPagoException(String.format("Pedido de ID: %d já está PAGO e não pode ser alterado.", id));
             }

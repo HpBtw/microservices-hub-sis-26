@@ -2,6 +2,7 @@ package com.github.HpBtw.ms_pagamentos.controller;
 
 import com.github.HpBtw.ms_pagamentos.dto.PagamentoDTO;
 import com.github.HpBtw.ms_pagamentos.service.PagamentoService;
+import io.github.resilience4j.circuitbreaker.annotation.CircuitBreaker;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotNull;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -44,9 +45,11 @@ public class PagamentoController {
     }
 
     @PatchMapping("/{id}/confirmar")
+    @CircuitBreaker(name = "atualizarPedido",
+            fallbackMethod = "fallbackConfirmarPedidoPendente")
     public ResponseEntity<PagamentoDTO> confirmarPagamentoDoPedido(@PathVariable
                                                                    @NotNull Long id) {
-        return ResponseEntity.ok(service.confirmarPagamento(id));
+        return ResponseEntity.ok(service.confirmarPagamentoDoPedido(id));
     }
 
     @PutMapping("/{id}")

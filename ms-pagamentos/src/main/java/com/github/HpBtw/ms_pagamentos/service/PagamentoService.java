@@ -23,7 +23,7 @@ public class PagamentoService {
     private PedidoClient pedidoClient;
 
     @Transactional
-    public PagamentoDTO confirmarPagamento(Long id) {
+    public PagamentoDTO confirmarPagamentoDoPedido(Long id) {
         Pagamento p = repo.findById(id).orElseThrow(
                 () -> new ResourceNotFoundException("Pagamento de ID: " + id + " não encontrado!")
         );
