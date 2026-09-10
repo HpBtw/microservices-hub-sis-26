@@ -47,7 +47,7 @@ public class PedidoController {
     }
 
     @PutMapping("/{pedidoId}/pagamento/confirmado")
-    public void confirmarPagamento(@PathVariable Long id) { service.confirmarPagamento(id);}
+    public void confirmarPagamento(@PathVariable Long pedidoId) { service.confirmarPagamento(pedidoId);}
 
     @PutMapping("/{id}")
     public ResponseEntity<PedidoDTO> updatePedido(@PathVariable Long id,

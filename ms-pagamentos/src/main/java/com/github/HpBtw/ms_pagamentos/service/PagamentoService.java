@@ -7,6 +7,7 @@ import com.github.HpBtw.ms_pagamentos.entities.Status;
 import com.github.HpBtw.ms_pagamentos.exceptions.PagamentoAprovadoException;
 import com.github.HpBtw.ms_pagamentos.exceptions.ResourceNotFoundException;
 import com.github.HpBtw.ms_pagamentos.repositories.PagamentoRepository;
+import feign.FeignException;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -30,7 +31,23 @@ public class PagamentoService {
         p.setStatus(Status.APROVADO);
         repo.save(p);
         pedidoClient.confirmarPagamento(p.getPedidoId());
+
+        try {
+            pedidoClient.confirmarPagamento(p.getPedidoId());
+        } catch (FeignException e) {
+            throw new RuntimeException("Falha ao comunicar com ms-pedidos", e);
+        }
+
         return new PagamentoDTO(p);
+    }
+
+    @Transactional
+    public PagamentoDTO alterarStatusDoPagamento(Long id) {
+        Pagamento p = repo.findById(id).orElseThrow(
+                () -> new ResourceNotFoundException("Pagamento de ID: '" + id + "' não encontrado.")
+        );
+        p.setStatus(Status.CONFIRMACAO_PENDENTE);
+        return new PagamentoDTO(repo.save(p));
     }
 
     @Transactional(readOnly = true)
