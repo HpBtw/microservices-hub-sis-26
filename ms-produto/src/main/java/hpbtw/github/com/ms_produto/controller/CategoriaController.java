@@ -1,19 +1,17 @@
 package hpbtw.github.com.ms_produto.controller;
 
-import com.github.HpBtw.ms_pagamentos.dto.CategoriaResponseDTO;
 import hpbtw.github.com.ms_produto.dto.CategoriaRequestDTO;
+import hpbtw.github.com.ms_produto.dto.CategoriaResponseDTO;
 import hpbtw.github.com.ms_produto.service.CategoriaService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import java.net.URI;
 
 @RestController
+@RequestMapping("/categorias")
 public class CategoriaController {
     @Autowired
     private CategoriaService service;

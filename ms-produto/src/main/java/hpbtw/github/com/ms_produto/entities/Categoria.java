@@ -1,9 +1,8 @@
 package hpbtw.github.com.ms_produto.entities;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import lombok.Data;
+import lombok.Generated;
 import lombok.NoArgsConstructor;
 
 @Data
@@ -12,6 +11,7 @@ import lombok.NoArgsConstructor;
 @Table(name = "tb_categoria")
 public class Categoria {
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String nome;
 }

@@ -1,7 +1,7 @@
 package hpbtw.github.com.ms_produto.service;
 
-import com.github.HpBtw.ms_pagamentos.dto.CategoriaResponseDTO;
 import hpbtw.github.com.ms_produto.dto.CategoriaRequestDTO;
+import hpbtw.github.com.ms_produto.dto.CategoriaResponseDTO;
 import hpbtw.github.com.ms_produto.entities.Categoria;
 import hpbtw.github.com.ms_produto.exceptions.ResourceNotFoundException;
 import hpbtw.github.com.ms_produto.repository.CategoriaRepository;
