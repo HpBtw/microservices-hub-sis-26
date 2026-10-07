@@ -30,7 +30,7 @@ public class CategoriaController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<CategoriaResponseDTO> updateCategoria(Long id, @RequestBody CategoriaRequestDTO input) {
+    public ResponseEntity<CategoriaResponseDTO> updateCategoria(@PathVariable Long id, @RequestBody CategoriaRequestDTO input) {
         CategoriaResponseDTO response = service.updateCategoria(id, input);
         return ResponseEntity.ok(response);
     }

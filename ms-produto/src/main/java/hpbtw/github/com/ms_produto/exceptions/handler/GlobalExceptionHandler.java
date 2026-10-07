@@ -55,6 +55,7 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(Exception.class)
     public ResponseEntity<CustomErrorDTO> handleGenericException(Exception e,
                                                                  HttpServletRequest request) {
+        e.printStackTrace();
         HttpStatus status = HttpStatus.INTERNAL_SERVER_ERROR; // 500
         CustomErrorDTO err = new CustomErrorDTO(
                 Instant.now(), status.value(),
