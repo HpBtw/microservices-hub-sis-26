@@ -6,16 +6,21 @@ import hpbtw.github.com.ms_produto.entities.Categoria;
 import hpbtw.github.com.ms_produto.exceptions.ResourceNotFoundException;
 import hpbtw.github.com.ms_produto.repository.CategoriaRepository;
 import jakarta.persistence.EntityNotFoundException;
-import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
 
 @Service
 public class CategoriaService {
     @Autowired
     private CategoriaRepository repo;
+
+    @Transactional(readOnly = true)
+    public List<CategoriaResponseDTO> findAllCategorias() {
+        return repo.findAll().stream().map(CategoriaResponseDTO::new).toList();
+    }
 
     @Transactional
     public CategoriaResponseDTO saveCategoria(CategoriaRequestDTO input) {

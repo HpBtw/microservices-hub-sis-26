@@ -1,0 +1,5 @@
+CREATE TABLE IF NOT EXISTS tb_categoria (
+    id BIGINT NOT NULL AUTO_INCREMENT,
+    nome VARCHAR(255) NOT NULL,
+    CONSTRAINT pk_tb_categoria PRIMARY KEY (id)
+);

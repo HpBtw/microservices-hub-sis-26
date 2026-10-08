@@ -16,7 +16,7 @@ FROM eclipse-temurin:17-jre
 
 WORKDIR /opt/app
 
-COPY --from=build 
+COPY --from=build
 
 EXPOSE 8080
 
